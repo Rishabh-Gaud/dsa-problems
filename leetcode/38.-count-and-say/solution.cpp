@@ -1,27 +1,22 @@
 class Solution {
 public:
-    string s = "1";
-    string countAndSay(int n) {
-       if(n == 1 ) return s;
-       string ansCandidate;
-       char ch = s[0];
-       int no = 0;
-       for(int i = 0; i < s.size(); i++) {
-           if(ch == s[i]) {
-               no++;
+    int romanToInt(string s) {
+       int answer = 0;
+       unordered_map<char, int>mp;
+       mp['I'] = 1;
+       mp['V'] = 5;
+       mp['X'] = 10;
+       mp['L'] = 50;
+       mp['C'] = 100;
+       mp['D'] = 500;
+       mp['M'] = 1000;
+       answer += mp[s[s.size() - 1]];
+       for(int i  = s.size() - 2; i >= 0; i--) {
+           if(mp[s[i]] >= mp[s[i + 1]]){
+               answer += mp[s[i]];
            }
-           else {
-               ansCandidate += (no + '0');
-               ansCandidate += ch;
-               ch = s[i];
-               no = 1;
-           }
+           else answer -= mp[s[i]];
        } 
-       if(no) {
-           ansCandidate += (no + '0');
-            ansCandidate += ch;
-       }
-       s = ansCandidate;
-       return countAndSay(n - 1);
+       return answer;
     }
 };
